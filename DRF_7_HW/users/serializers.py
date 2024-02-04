@@ -12,5 +12,4 @@ class UserSerializer(serializers.ModelSerializer):
         return instance.payment.count()
     class Meta:
         model = User
-        fields = ('email', 'password', 'phone', 'city', 'avatar')
-        fields = ('id', 'email', 'password', 'payments_count', 'payments', 'phone', 'city', 'avatar')
+        fields = ('id', 'email', 'role', 'password', 'payments_count', 'payments', 'phone', 'city', 'avatar')
