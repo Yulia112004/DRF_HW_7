@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     'drf_yasg',
     'corsheaders',
+    'django_celery_beat',
 
     'course',
     'lesson',
@@ -184,3 +185,11 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 STRIPE_API_KEY = get_env_value('STRIPE_API_KEY')
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+
+EMAIL_HOST = get_env_value('EMAIL_HOST')
+EMAIL_PORT = get_env_value('EMAIL_PORT')
+EMAIL_HOST_USER = get_env_value('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = get_env_value('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = get_env_value('EMAIL_USE_SSL')
