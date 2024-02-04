@@ -7,6 +7,7 @@ from lesson.paginators import LessonPaginator
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
+    permission_classes = [IsOwner | IsStaff]
 
     def perform_create(self, serializer):
         new_lesson = serializer.save()
@@ -23,12 +24,15 @@ class LessonListAPIView(generics.ListAPIView):
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsOwner | IsStaff]
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsOwner | IsStaff]
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
     queryset = Lesson.objects.all()
+    permission_classes = [IsOwner | IsStaff]
