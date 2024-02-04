@@ -1,9 +1,10 @@
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from course.models import Course
+from course.models import Course, Subscription
 from course.permission import IsOwner
 from lesson.permission import IsStaff
-from course.serializers import CourseSerializer
+from course.serializers import CourseSerializer, SubscriptionSerializer
 
 
 class CourseViewSet(ModelViewSet):
@@ -23,3 +24,18 @@ class CourseViewSet(ModelViewSet):
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+
+class SubscriptionCreateAPIView(generics.CreateAPIView):
+    serializer_class = SubscriptionSerializer
+
+    def perform_create(self, serializer, **kwargs):
+        new_subscription = serializer.save()
+
+        new_subscription.user = self.request.user
+        new_subscription.course = Course.objects.get(id=self.kwargs['pk'])
+        new_subscription.save()
+
+
+class SubscriptionDestroyAPIView(generics.DestroyAPIView):
+    queryset = Subscription.objects.all()
